@@ -11,8 +11,21 @@ function ask_ref_filter_menu() {
   return $items;
 }
 
+/**
+ * Implements hook_preprocess_node().
+ */
 
-
+function ask_ref_filter_node_view($node, $view_mode = 'full', $langcode = NULL) {
+//function ask_ref_filter_preprocess_node(&$variables) {
+  //dpm($node);
+  if ($node->content['body']['#view_mode'] == 'full') {
+    $path = drupal_get_path('module', 'ask_ref_filter');
+    if ($node->type == 'page' && $node->book['bid'] == '74') {
+      drupal_add_js($path . '/js/ref_highlight.js', array('type' => 'file', 'scope' => 'header'));
+      //dpm($path.'/js/ref_highlight.js');
+    }
+  }
+}
 /**
  * Implements hook_filter_info().
  *
@@ -64,22 +77,44 @@ function _ask_ref_filter_filter_highlight_settings($form, $form_state, $filter, 
  * Highlight filter process callback.
  */
 function _ask_ref_filter_filter_highlight_process($text, $filter, $format) {
-  $pattern = '/^\[[A-Za-z0-9 ]*: ?([a-z]*)\]';
 
-  $pattern = '/\[[A-Za-z0-9 ]*: ?[a-z]*\]/';
-  $count = preg_match($pattern, $text, $matches, PREG_OFFSET_CAPTURE );
-  dpm($matches);
-  /*
-  preg_replace_callback(
+  // $pattern = '/\[[A-Za-z0-9\., ]* ?| ?[a-z]*\]/';
+  $pattern = '/\[.*\|.*\]/';
+  $pattern = '/\[.*?\|.*?\]/';
+  
+  // $count = preg_match($pattern, $text, $matches, PREG_OFFSET_CAPTURE );
+  // dpm($matches);
+  
+  $text = preg_replace_callback(
             $pattern,
-            "function_name",
+            "_ask_ref_highlights",
             $text);
-  */
+  
+
   return $text;
   //return str_replace('highlight', $replacement, $text);
 }
 
+function _ask_ref_highlights($matches) {
+  $separator = '|';
+  $reference = $matches[0];
+  $reference = explode($separator, str_replace(array('[',']'), '', $reference));
+  array_walk($reference, '_clean_ref_components');
+  //dpm($reference);
+  // if there is an optional third argument, use it as a tooltip
+  if (isset($reference[2])) { 
+    $tip = ' title="'.$reference[2].'" data-toggle="tooltip" data-placement="top"'; 
+  }
+  // otherwise just use the simple class label
+  else {
+    $tip = ' title="'.$reference[1].'" data-toggle="tooltip" data-placement="top"'; 
+  }
+  return '<span class="reference-'.strtolower($reference[1]).'"'.$tip.'>'.$reference[0].'</span>';
+}
 
+function _clean_ref_components(&$item, $key) {
+  $item = check_plain(trim($item));
+}
 /**
  * Filter tips callback for highlight filter.
  *
@@ -108,6 +143,7 @@ function ask_ref_filter_help($path, $arg) {
   switch ($path) {
     case 'admin/help#ask_ref_filter':
       return _ask_ref_filter_information();
+
   }
 }
 
@@ -119,3 +155,28 @@ function _ask_ref_filter_information() {
     array('!link' => l(t('admin/config/content/formats'), 'admin/config/content/formats'))
   );
 }
+
+/* PREVIEW HIGHLIGHTING */
+
+/*
+ * Implements hook_form_alter
+ * 
+ *  add live preview to node edit (uses https://drupal.org/project/ajax_markup)
+ *  couldn't get this working
+ */
+// function ask_ref_filter_form_alter(&$form, &$form_state, $form_id) {
+//   dpm($form_id);
+//   switch ($form_id) {
+//     case 'page_node_form':
+//       $form['#after_build'][] = '_ask_ref_filter_after_build';
+//       break;
+//   }
+//}
+
+// function _ask_ref_filter_after_build($form, &$form_state) {
+//   dpm('_ask_ref_filter_after_build');
+//   $path = drupal_get_path('module', 'ask_ref_filter');
+//   drupal_add_js($path . '/js/preview_highlights.js', array('type' => 'file', 'scope' => 'header'));
+//   return $form;
+// }
+/* PREVIEW */
