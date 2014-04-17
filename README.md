@@ -14,4 +14,4 @@ http://tombola.github.io/2014/04/17/Markdown-syntax/
 
 *Screenshot*
 
-![Screenshot of highlighted reference with tooltip](/images/referencing_highlights.png)
+![Screenshot of highlighted reference with tooltip](http://tombola.github.io/images/referencing_highlights.png)
