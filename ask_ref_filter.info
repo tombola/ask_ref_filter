@@ -1,0 +1,4 @@
+name = ASK Referencing Filter
+description = "stylistic highlighting for referencing guide"
+core = 7.x
+package = "Ask"

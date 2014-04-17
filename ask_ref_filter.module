@@ -1,0 +1,110 @@
+<?php
+/**
+ * Implements hook_menu().
+ */
+function ask_ref_filter_menu() {
+  $items['examples/ask_ref_filter'] = array(
+    'title' => 'Filter Example',
+    'page callback' => '_ask_ref_filter_information',
+    'access callback' => TRUE,
+  );
+  return $items;
+}
+
+
+
+/**
+ * Implements hook_filter_info().
+ *
+ * Here we define the different filters provided by the module. For this
+ * example, time_filter is a very static and simple replacement, but it requires
+ * some preparation of the string because of the special html tags < and >. The
+ * highlight_filter is more complex, including its own settings and inline tips.
+ */
+function ask_ref_filter_filter_info() {
+  $filters['filter_highlight'] = array(
+    'title' => t('Highlight Filter'),
+    'description' => t('Every instance of "highlight" in the input text will be replaced with a preconfigured replacement.'),
+    'process callback'  => '_ask_ref_filter_filter_highlight_process',
+    'default settings' => array(
+      'ask_ref_filter_highlight' => 'bar',
+    ),
+    'settings callback' => '_ask_ref_filter_filter_highlight_settings',
+    'tips callback' => '_ask_ref_filter_filter_highlight_tips',
+  );
+  return $filters;
+}
+
+/*
+ * Highlight filter
+ *
+ * Drupal has several text formats (they are not filters), and in our example
+ * the highlight replacement can be configured for each one of them, so the module
+ * includes a settings callback, with options to configure those replacements.
+ * Also, a Tips callback will help showing the current replacement
+ * for the content type being edited.
+ */
+
+/**
+ * Settings callback for highlight filter.
+ *
+ * Per input format
+ */
+function _ask_ref_filter_filter_highlight_settings($form, $form_state, $filter, $format, $defaults) {
+  $settings['ask_ref_filter_highlight'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Substitution string'),
+    '#default_value' => isset($filter->settings['ask_ref_filter_highlight']) ? $filter->settings['ask_ref_filter_highlight'] : $defaults['ask_ref_filter_highlight'],
+    '#description' => t('The string to substitute for "highlight" everywhere in the text.'),
+  );
+  return $settings;
+}
+
+/**
+ * Highlight filter process callback.
+ */
+function _ask_ref_filter_filter_highlight_process($text, $filter, $format) {
+  $replacement = isset($filter->settings['ask_ref_filter_highlight']) ? $filter->settings['ask_ref_filter_highlight'] : 'bar';
+  return str_replace('highlight', $replacement, $text);
+}
+
+
+/**
+ * Filter tips callback for highlight filter.
+ *
+ */
+function _ask_ref_filter_filter_highlight_tips($filter, $format, $long = FALSE) {
+  if (!$long) {
+    // This string will be shown in the content add/edit form.
+    return t('<em>[Shakespeare:author]</em>, <em>[1948:year]</em> etc highlighted within reference');
+  }
+  else {
+    return t('Highlighting is applied as follows: 
+<ul>
+<li><em>[Shakespeare:author]</em> -> red</li>, 
+<li><em>[1948:year]</em> -> blue</li>
+<li>...</li>
+<li>...</li>
+</ul>');
+  }
+}
+
+
+/**
+ * Implements hook_help().
+ */
+function ask_ref_filter_help($path, $arg) {
+  switch ($path) {
+    case 'admin/help#ask_ref_filter':
+      return _ask_ref_filter_information();
+  }
+}
+
+/**
+ * Simply returns a little bit of information about the example.
+ */
+function _ask_ref_filter_information() {
+  return t("<p>This module provides a markdown style filter to enable highlighting of the components of a reference (eg author, title etc.</p><p>The reasoning for this is discussed <a href=\"http://goo.gl/Tke156\">here</a></p>",
+    array('!link' => l(t('admin/config/content/formats'), 'admin/config/content/formats'))
+  );
+}
