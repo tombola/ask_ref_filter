@@ -24,7 +24,7 @@ function ask_ref_filter_menu() {
 function ask_ref_filter_filter_info() {
   $filters['filter_highlight'] = array(
     'title' => t('Highlight Filter'),
-    'description' => t('Every instance of "highlight" in the input text will be replaced with a preconfigured replacement.'),
+    'description' => t('Highlight author, date etc in references'),
     'process callback'  => '_ask_ref_filter_filter_highlight_process',
     'default settings' => array(
       'ask_ref_filter_highlight' => 'bar',
@@ -64,8 +64,19 @@ function _ask_ref_filter_filter_highlight_settings($form, $form_state, $filter, 
  * Highlight filter process callback.
  */
 function _ask_ref_filter_filter_highlight_process($text, $filter, $format) {
-  $replacement = isset($filter->settings['ask_ref_filter_highlight']) ? $filter->settings['ask_ref_filter_highlight'] : 'bar';
-  return str_replace('highlight', $replacement, $text);
+  $pattern = '/^\[[A-Za-z0-9 ]*: ?([a-z]*)\]';
+
+  $pattern = '/\[[A-Za-z0-9 ]*: ?[a-z]*\]/';
+  $count = preg_match($pattern, $text, $matches, PREG_OFFSET_CAPTURE );
+  dpm($matches);
+  /*
+  preg_replace_callback(
+            $pattern,
+            "function_name",
+            $text);
+  */
+  return $text;
+  //return str_replace('highlight', $replacement, $text);
 }
 
 
