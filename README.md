@@ -1,4 +1,4 @@
-Drupal Markdown extension for Referencing Guides
+Drupal referencing markdown
 ==============
 
 Drupal input filter to allow highlighting of academic referencing guides. Complement to Markdown.
