@@ -1,4 +1,5 @@
-Drupal academic referencing markdown
+#Academic Reference Highlighter
+##drupal module to extend markdown 
 ==============
 
 ![Screenshot of highlighted reference with tooltip](http://tombola.github.io/images/referencing_highlights.png)
