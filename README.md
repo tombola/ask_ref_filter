@@ -1,4 +1,4 @@
-Drupal referencing markdown
+Drupal academic referencing markdown
 ==============
 
 ![Screenshot of highlighted reference with tooltip](http://tombola.github.io/images/referencing_highlights.png)
