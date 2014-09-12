@@ -1,4 +1,16 @@
 <?php
+
+/**
+ * Implements hook_permission().
+ */
+function ask_ref_filter_permission() {
+  return array(
+    'use reference highlighting' => array(
+        'title' => t('Use reference highlighting widget'),
+    ),
+  );
+}
+
 /**
  * Implements hook_menu().
  */
@@ -46,6 +58,12 @@ function ask_ref_filter_filter_info() {
     'tips callback' => '_ask_ref_filter_filter_highlight_tips',
   );
   return $filters;
+}
+
+function ask_ref_filter_form_page_node_form_alter(&$form, &$form_state, $form_id) {
+  if (user_access('use reference highlighting')) {
+    drupal_add_js(drupal_get_path('module', 'ask_ref_filter').'/js/tag_selection.js');
+  }
 }
 
 /*
