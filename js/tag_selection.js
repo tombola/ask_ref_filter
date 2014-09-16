@@ -8,6 +8,8 @@ jQuery(document).ready(function () {
     'auth' : 'author',
     'pub' : 'publisher',
     'date' : 'date',
+    'publoc': 'publisher location',
+    'edition': 'edition',
     'title': 'title'
   };
   var options = '';
