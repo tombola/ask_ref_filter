@@ -7,6 +7,7 @@ jQuery(document).ready(function () {
   var syntaxElements = {
     'auth' : 'author',
     'title': 'title',
+    'date': 'date',
     'pub' : 'publisher',
     'publoc': 'publisher location',
     'edition': 'edition'
