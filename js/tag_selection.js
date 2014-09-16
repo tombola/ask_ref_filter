@@ -17,12 +17,18 @@ jQuery(document).ready(function () {
     options += '<option value="'+value+'">'+value+'</option>';
   });
 
-  var checkbox = '<input type="checkbox" name="vehicle" value="Bike" id="refkeyedit">edit reference highlights<br>';
-  var widget = '<br/><div id="refwidget" class="pull-right span4"><label>Referencing Markup Widget</label><select id="refel">'+options+'</select><input type="text" name="elabel" id="elabel">'+checkbox+'</div>';
+  var checkbox = '<input type="checkbox" class="pull-left" id="refkeyedit">edit reference highlights<br>';
+  var checkbox2 = '<input type="checkbox" class="pull-left" id="cleartags">clear tags<br>';
+
+  var widget = '<br/><div id="refwidget"><label>Referencing Markup Widget</label><select id="refel">'+options+'</select><input type="text" name="elabel" id="elabel">'+checkbox+checkbox2+'</div>';
   jQuery('#edit-body').before(widget);
   var refeditable = false;
   jQuery('#refkeyedit').change( function() {
     refeditable = !refeditable;
+  });
+  var cleartags = false;
+  jQuery('#cleartags').change( function() {
+    cleartags = !cleartags;
   });
 
   var element = 'author';
@@ -32,19 +38,26 @@ jQuery(document).ready(function () {
 
       if (refeditable) {
         var startIndex = jQuery(this)[0].selectionStart;
-
         var endIndex = jQuery(this)[0].selectionEnd;
-
-        element = jQuery('#refel').val();
-        el = jQuery('#elabel').val();
-        elabel = (el != '') ? '|'+el : '';
-
         var slicedText = jQuery(this).text().slice(startIndex, endIndex);
 
-        taggedText = '[' + slicedText + '|'+element+elabel+']';
-        withtags = replaceAt(jQuery(this).text(), taggedText, startIndex, endIndex);
+        if (cleartags) {
+          untagged = slicedText.replace('[', '');
+          untagged = untagged.replace(/\|[\w]*\]/g, '');
+          
+          withouttags = replaceAt(jQuery(this).text(), untagged, startIndex, endIndex);
+          jQuery(this).html(withouttags);
+        }
+        else {
+          element = jQuery('#refel').val();
+          el = jQuery('#elabel').val();
+          elabel = (el != '') ? '|'+el : '';
 
-        jQuery(this).html(withtags);
+          taggedText = '[' + slicedText + '|'+element+elabel+']';
+          withtags = replaceAt(jQuery(this).text(), taggedText, startIndex, endIndex);
+
+          jQuery(this).html(withtags);
+        }
       }
   });
 
