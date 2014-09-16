@@ -1,3 +1,7 @@
+function replaceAt(source, replace, start, end) {
+  return source.substring(0, start) + replace + source.substring(end);
+}
+
 jQuery(document).ready(function () {
 
   var syntaxElements = {
@@ -7,6 +11,8 @@ jQuery(document).ready(function () {
     'title': 'title'
   };
   var options = '';
+
+
   jQuery.each(syntaxElements, function(key, value) {
     options += '<option value="'+value+'">'+value+'</option>';
   });
@@ -21,7 +27,6 @@ jQuery(document).ready(function () {
 
   var element = 'author';
   var elabel = '';
-
   jQuery('textarea').mouseup(function() {
       mouseDown=false;
 
@@ -33,8 +38,13 @@ jQuery(document).ready(function () {
         element = jQuery('#refel').val();
         el = jQuery('#elabel').val();
         elabel = (el != '') ? '|'+el : '';
+
         var slicedText = jQuery(this).text().slice(startIndex, endIndex);
-        jQuery(this).html(jQuery(this).text().replace(slicedText,'[' + slicedText + '|'+element+elabel+']'));
+
+        taggedText = '[' + slicedText + '|'+element+elabel+']';
+        withtags = replaceAt(jQuery(this).text(), taggedText, startIndex, endIndex);
+
+        jQuery(this).html(withtags);
       }
   });
 
