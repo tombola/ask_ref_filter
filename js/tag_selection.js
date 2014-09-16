@@ -10,7 +10,8 @@ jQuery(document).ready(function () {
     'date': 'date',
     'pub' : 'publisher',
     'publoc': 'publisher location',
-    'edition': 'edition'
+    'edition': 'edition',
+    'misc': 'other'
   };
   var options = '';
 
