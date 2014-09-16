@@ -6,11 +6,10 @@ jQuery(document).ready(function () {
 
   var syntaxElements = {
     'auth' : 'author',
+    'title': 'title',
     'pub' : 'publisher',
-    'date' : 'date',
     'publoc': 'publisher location',
-    'edition': 'edition',
-    'title': 'title'
+    'edition': 'edition'
   };
   var options = '';
 
@@ -31,6 +30,10 @@ jQuery(document).ready(function () {
   var cleartags = false;
   jQuery('#cleartags').change( function() {
     cleartags = !cleartags;
+  });
+  jQuery('#refel').change( function() {
+    refeditable = true;
+    $('.myCheckbox').prop('checked', true);
   });
 
   var element = 'author';
