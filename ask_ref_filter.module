@@ -99,7 +99,7 @@ function _ask_ref_filter_filter_highlight_process($text, $filter, $format) {
   // $pattern = '/\[[A-Za-z0-9\., ]* ?| ?[a-z]*\]/';
   // $pattern = '/\[.*\|.*\]/';
   // $pattern = '/\[.*?\|.*?\]/';
-  $pattern = '/\[[\w,.& ;]*\|[\w]*\|?[\w,. ;]*?\]/';
+  $pattern = "/\[[\w, &!?',.;]*\|[\w]*\|?[\w,. ;]*?\]/";
 
 
   
