@@ -33,9 +33,9 @@ jQuery(document).ready(function () {
   });
   jQuery('#refel').change( function() {
     refeditable = true;
-    $('#refkeyedit').prop('checked', true);
+    jQuery('#refkeyedit').prop('checked', true);
     cleartags = false;
-    $('#cleartags').prop('checked', true);
+    jQuery('#cleartags').prop('checked', false);
   });
 
   var element = 'author';
