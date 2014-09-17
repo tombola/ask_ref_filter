@@ -40,6 +40,7 @@ jQuery(document).ready(function () {
   });
   jQuery('#refel').change( function() {
     refeditable = true;
+    jQuery('#elabel').val('');
     jQuery('#refkeyedit').prop('checked', true);
     jQuery('#refkeylabel').css('color', 'red');
     cleartags = false;
