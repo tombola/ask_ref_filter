@@ -23,22 +23,25 @@ jQuery(document).ready(function () {
     options += '<option value="'+key+'">'+value+'</option>';
   });
 
-  var checkbox = '<input type="checkbox" class="pull-left" id="refkeyedit">edit reference highlights<br>';
+  var checkbox = '<input type="checkbox" class="pull-left" id="refkeyedit"><span id="refkeylabel"> edit reference highlights</span><br>';
   var checkbox2 = '<input type="checkbox" class="pull-left" id="cleartags">clear tags<br>';
 
   var widget = '<br/><div id="refwidget"><label>Referencing Markup Widget</label><select id="refel">'+options+'</select><input type="text" name="elabel" id="elabel">'+checkbox+checkbox2+'</div>';
   jQuery('#edit-body').before(widget);
   var refeditable = false;
-  jQuery('#refkeyedit').change( function() {
+  jQuery('#refkeyedit').change( function(e) {
     refeditable = !refeditable;
+    (refeditable)? jQuery('#refkeylabel').css('color', 'red') : jQuery('#refkeylabel').css('color', 'black');
   });
   var cleartags = false;
   jQuery('#cleartags').change( function() {
     cleartags = !cleartags;
+    (cleartags)? jQuery('#refkeylabel').css('color', '#0099FF') : (refeditable)? jQuery('#refkeylabel').css('color', 'red') : jQuery('#refkeylabel').css('color', 'black');
   });
   jQuery('#refel').change( function() {
     refeditable = true;
     jQuery('#refkeyedit').prop('checked', true);
+    jQuery('#refkeylabel').css('color', 'red');
     cleartags = false;
     jQuery('#cleartags').prop('checked', false);
   });
