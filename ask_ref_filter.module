@@ -126,7 +126,7 @@ function _ask_ref_highlights($matches) {
   else {
     $tip = ' title="'.$reference[1].'" data-toggle="tooltip" data-placement="top"'; 
   }
-  return '<span class="reference-'.strtolower($reference[1]).'"'.$tip.'>'.$reference[0].'</span>';
+  return '<span class="reffilter reference-'.strtolower($reference[1]).'"'.$tip.'>'.$reference[0].'</span>';
 }
 
 function _clean_ref_components(&$item, $key) {

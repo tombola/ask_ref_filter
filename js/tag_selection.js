@@ -5,13 +5,13 @@ function replaceAt(source, replace, start, end) {
 jQuery(document).ready(function () {
 
   var syntaxElements = {
-    'auth' : 'author',
+    'author' : 'author',
     'title': 'title',
     'date': 'date',
-    'pub' : 'publisher',
+    'publisher' : 'publisher',
     'publoc': 'publisher location',
     'edition': 'edition',
-    'misc': 'other',
+    'other': 'other',
     'page': 'page number(s)',
     'volume': 'volume',
     'editor': 'editor'
@@ -20,7 +20,7 @@ jQuery(document).ready(function () {
 
 
   jQuery.each(syntaxElements, function(key, value) {
-    options += '<option value="'+value+'">'+value+'</option>';
+    options += '<option value="'+key+'">'+value+'</option>';
   });
 
   var checkbox = '<input type="checkbox" class="pull-left" id="refkeyedit">edit reference highlights<br>';
