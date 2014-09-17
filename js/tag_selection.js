@@ -54,12 +54,14 @@ jQuery(document).ready(function () {
         var slicedText = jQuery(this).text().slice(startIndex, endIndex);
 
         if (cleartags) {
-          untagged = slicedText.replace('[', '');
+          
           // untagged = untagged.replace(/\|[\w]*\]/g, '');
-          untagged = untagged.replace(/\|[\w\?'’,.;:!\/\-&\(\) \|]*\]/g, '');
-          
-          
-          withouttags = replaceAt(jQuery(this).text(), untagged, startIndex, endIndex);
+          untag = slicedText.replace(/\|[\w\?'’,.;:!\/\-&\(\) \|]*\]/g, '');
+          console.log(untag);
+          unbracket = untag.replace(/\[/g, '');
+          console.log(unbracket);
+
+          withouttags = replaceAt(jQuery(this).text(), unbracket, startIndex, endIndex);
           jQuery(this).html(withouttags);
         }
         else {
