@@ -55,7 +55,9 @@ jQuery(document).ready(function () {
 
         if (cleartags) {
           untagged = slicedText.replace('[', '');
-          untagged = untagged.replace(/\|[\w]*\]/g, '');
+          // untagged = untagged.replace(/\|[\w]*\]/g, '');
+          untagged = untagged.replace(/\|[\w\?'’,.;:!\/\-&\(\) \|]*\]/g, '');
+          
           
           withouttags = replaceAt(jQuery(this).text(), untagged, startIndex, endIndex);
           jQuery(this).html(withouttags);
