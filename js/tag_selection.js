@@ -31,6 +31,7 @@ jQuery(document).ready(function () {
   var refeditable = false;
   jQuery('#refkeyedit').change( function(e) {
     refeditable = !refeditable;
+    if (cleartags) { cleartags = false; jQuery('#cleartags').prop('checked', false); }
     (refeditable)? jQuery('#refkeylabel').css('color', 'red') : jQuery('#refkeylabel').css('color', 'black');
   });
   var cleartags = false;
