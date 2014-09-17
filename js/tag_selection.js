@@ -11,7 +11,10 @@ jQuery(document).ready(function () {
     'pub' : 'publisher',
     'publoc': 'publisher location',
     'edition': 'edition',
-    'misc': 'other'
+    'misc': 'other',
+    'page': 'page number(s)',
+    'volume': 'volume',
+    'editor': 'editor'
   };
   var options = '';
 
